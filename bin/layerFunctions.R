@@ -10,7 +10,7 @@ get.layer.count <- function(df.cl.acronym, bool.return.proportion = T) {
   
 
   #Loading the layer table
-  load(paste(path.bin, 'layerstable.RData', sep = '/'))
+  load(paste(path.matrices, 'layerstable.RData', sep = '/'))
   
   #Mapping the layer in the spots table
   df.cl.acronym$layer <- mapvalues(df.cl.acronym$acronym,
@@ -100,7 +100,7 @@ get.layer.from.voxels <- function(grid.3d, grid.parameters, parallel.cores = 0){
     list.layers.df <- foreach(i=1:(dim(grid.3d)[3]),
                               .packages=c('wholebrain'),
                               .export=c('get.layer.from.pixels',
-                                        'path.bin',
+                                        'path.matrices',
                                         'get.acronym.depth',
                                         'get.layer.count')) %dopar% {
                                           
@@ -118,7 +118,7 @@ get.layer.from.voxels <- function(grid.3d, grid.parameters, parallel.cores = 0){
 get.layer.from.pixels <- function(grid.2d, grid.parameters){
   
   #Loading the stereotaxic atlac
-  load(paste(path.bin, 'atlasstereo.RData', sep='/'))
+  load(paste(path.matrices, 'atlasstereo.RData', sep='/'))
   
   #Expanding grid and converting array into a data frame with 3 cols: ML/DV/cluster
   coord <- expand.grid(grid.parameters$ML, grid.parameters$DV)
