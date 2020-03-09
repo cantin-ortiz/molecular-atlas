@@ -1285,7 +1285,7 @@ append.kellys.color.spots.table <- function(spots.table, mode = 'kellys'){
 
 append.common.vivid.colors <- function(spots.table){
   
-  load(paste(path.bin, 'vivid-colors.RData', sep='/'))
+  load(paste(path.matrices, 'vivid-colors.RData', sep='/'))
   
   spots.table$color <- as.character(mapvalues(spots.table$clusters.named, 
                                               from = rownames(df.colors.vivid),

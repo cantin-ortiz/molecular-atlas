@@ -20,8 +20,6 @@ load(path.all.meshes)
 mesh.outline <- mesh3d.allen.annot.from.id(get.id.from.acronym('root'))
 
 #------------- Rendering sections -----------------
-#-------------*** Straight cuts -----------------
-
 for (i in 1:length(param.list)){
   
   
