@@ -1,6 +1,6 @@
 rm(list = ls())
 source('bin/includes.R')
-setwd('figures/sup2/A-B-D-E')
+setwd('figures/sup02/A-B-D-E')
 
 load.expr.mat()
 

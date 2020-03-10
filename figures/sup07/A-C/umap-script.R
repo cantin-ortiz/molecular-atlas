@@ -1,7 +1,7 @@
 #------------------- Includes  ------------------- 
 
 source('bin/includes.R')
-setwd('figures/sup7/A-C')
+setwd('figures/sup07/A-C')
 
 #------------------- Parameters  ------------------- 
 

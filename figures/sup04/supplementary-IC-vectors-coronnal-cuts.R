@@ -1,7 +1,7 @@
 #--------------- INCLUDES ---------------  
  
 source('bin/includes.R')
-setwd('figures/sup4')
+setwd('figures/sup04')
 
 #--------------- LOADING --------------- 
 

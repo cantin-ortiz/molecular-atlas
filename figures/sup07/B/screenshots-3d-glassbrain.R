@@ -1,30 +1,50 @@
-#------------- INCLUDES -----------------
+# ------------ INCLUDES --------------
 
+library(Rvcg)
 source('bin/includes.R')
-setwd('figures/sup7/E')
-library(parallel)
-library(foreach)
-library(itertools)
-library(raster)
+setwd('figures/sup07/B')
 
-#------------- PARAMETERS -----------------
+# ------------ PARAMETERS --------------
 
 vector.order <- c(1,2,3)
-# data.dir <- 'C:/Users/MatLab/Desktop/transcripBrainAtlas/figures/Vector atlas SVM/pixels/all-genes-fullHD/'
-data.dir <- paste(path.matrices, 'smoothed-atlas/all-genes-HD/pixels', sep = '/')
+data.dir <- path.matrices
 selected <- '10_0.3_correlation'
 
-sel.files <- c('2mm25','1mm84', '0mm74', '0mm14', '-0mm66', '-1mm05', '-1mm55', '-1mm96', '-2mm25', '-2mm88', '-3mm58', '-3mm78', '-4mm46', '-5mm25')
+n.itt <- 5
+M.view1 <- rbind(c(0.821424901485443,0,-0.570316672325134,0),c(-0.174864053726196,0.951835632324219,-0.251856029033661,0),c(0.542847752571106,0.306608706712723,0.781861484050751,0),c(0,0,0,1))
+M.saggital <- rbind(c(0,0,-1,0),c(0,1,0,0),c(1,-0,0,0),c(0,0,0,1))
+M.horizontal <- rbind(c(0,0,-1,0),c(-1,0,0,0),c(0,1,0,0),c(0,0,0,1))
 
-#------------- LOADING -----------------
+set.obs <- function(view){
+  if(view == 'view1'){
+    M <- M.view1
+    zoom <- 0.4
+    observer3d(0,-0.33,13)
+  }
+  if(view == 'saggital'){
+    M <- M.saggital
+    zoom <- 0.36
+    observer3d(0.1,-0.15,13)
+  }
+  if(view == 'horizontal'){
+    M <- M.horizontal
+    zoom <- 0.43
+    observer3d(0.1,0,13)
+  }
+  
+  par3d(zoom = zoom,
+        userMatrix = M)
+}
+
+
+
+# ------------ LOADING --------------
 
 spots.table.raw <- add.parent.acronym(load.spots.table())
 spots.table.0 <- append.cluster.to.spots.table(spots.table.raw, cl.file, min.cluster.size = 0)
 spots.table.10 <- append.cluster.to.spots.table(spots.table.raw, cl.file, min.cluster.size = 10)
 
-df.colors.tsne <- get.color.from.3d.tsne(tsne.3d.path, spots.table.10)
-
-#------------- DF COLORS -----------------
+# ------------ DF COLORS --------------
 
 path.sel <- paste(data.dir,'/UMAP_3_',selected,'.txt',sep='')
 
@@ -68,29 +88,26 @@ for (cl in rownames(df.colors)) {
                                           median(vect.3[sel.spots]))
 }
 
-df.colors.umap <- df.colors[order(rownames(df.colors)),]
+df.colors <- df.colors[order(rownames(df.colors)),]
 
-
-#------------- *** Plotting ----------------
-  
 spots.table <- spots.table.10
+spots.table$colors <- as.character(mapvalues(spots.table$cluster,
+                                   from = df.colors$cluster.id,
+                                   to = df.colors$clusters.colors))
 
-for(f in sel.files){
-  
-  fname <- paste(data.dir, '/predictions_', f, '.RData', sep = '')
-  load(fname)
-  
-  pdf(generate.appropriate.file.name(sprintf('coronal-umap-tsne-%s.pdf', f)),
-      width = 10, height = 7, useDingbats = F)
+# ------------ PLOT --------------
 
-  par(mar= c(0.2, 0.2, 0.2, 0.2),
-      xpd=TRUE)
+mesh3d.new.window(T)
+spheres3d(-spots.table$ML, spots.table$DV, spots.table$AP, col = spots.table$colors,
+          radius = 0.04, alpha = 1)
 
-  plot(1, type = 'n', asp = 1, ylim = c(-8,0), xlim = c(-6,6),
-       bty = "n", xaxt = 'n', yaxt = 'n', xlab = '', ylab='')
+set.obs('view1')
+rgl.snapshot('clusters-3d-spots-view1.png')
 
-  plot.raster.atlas(grid.2d, grid.parameters, df.colors.tsne, show.edges = T, increase.factor = 1, file.path = NULL, add = TRUE, right.hemisphere = T)
-  plot.raster.atlas(grid.2d, grid.parameters, df.colors.umap, show.edges = T, increase.factor = 1, file.path = NULL, add = TRUE, right.hemisphere = F)
- 
-  dev.off()
-}
+set.obs('saggital')
+rgl.snapshot('clusters-3d-spots-saggital.png')
+
+set.obs('horizontal')
+rgl.snapshot('clusters-3d-spots-horizontal.png')
+
+rgl.close()

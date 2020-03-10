@@ -1,7 +1,7 @@
 #------------------- Basic includes  ------------------- 
 
 source('bin/includes.R')
-setwd('figures/sup7/D')
+setwd('figures/sup07/D')
 library(ape)
 
 #------------------- Functions  ------------------- 
