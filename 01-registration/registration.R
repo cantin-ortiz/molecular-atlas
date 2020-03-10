@@ -7,19 +7,19 @@ quartz<-function(width,height){windows(width, height)}
 st.get.cy3 <- function(slice.parameters, Cy3.gray, HE.path,display.segmentation = TRUE, qc.plot = FALSE){
   
   #--------------------- Default parameters and structure definition ------------------
-
+  
   alignment.path <- 'Alignment/selected_adjusted_spots_coordinates.txt'
   
-    #Defining structures for the pictures
+  #Defining structures for the pictures
   HE <- list(path = HE.path,
              grayscale = character(),
              resolution = list(x = 0,y = 0),
              original = numeric()
-             )
-
+  )
+  
   Cy3 <- list(grayscale = Cy3.gray,
               resolution = list(x = 0,y = 0)
-              )
+  )
   
   
   
@@ -45,7 +45,7 @@ st.get.cy3 <- function(slice.parameters, Cy3.gray, HE.path,display.segmentation 
   
   #Extracting spots trough wholeBrain segmentation
   spots <- segment(Cy3$grayscale, filter = slice.parameters$feature.filter, get.contour = TRUE, display = display.segmentation)
-
+  
   #--------------------- Computing the equivalent radius of spots ------------------
   
   #Getting trough segmented spots to compute an equivalent radius
@@ -95,7 +95,7 @@ st.get.cy3 <- function(slice.parameters, Cy3.gray, HE.path,display.segmentation 
     #In blue the theoretical circle
     symbols(spots$soma$x,spots$soma$y,circles = spots$soma$radius, inches=FALSE, asp = 1,fg='blue',xlim = c(0,32000),ylim = c(30000,1000),
             lwd = 0.5,xlab = 'x coordinates in Cy3 picture (pixels)',ylab = 'y coordinates in Cy3 picture (pixels)')
-  
+    
     #In red the real circles
     lines(matrix.lines,col = 'red',lwd = 0.15)
     
@@ -135,7 +135,7 @@ st.get.cy3 <- function(slice.parameters, Cy3.gray, HE.path,display.segmentation 
   #Remapping to HE picture
   spots$soma$x.remap  <- (spots$soma$x - top.left[1])*coeff
   spots$soma$y.remap <- (spots$soma$y - top.left[2])*coeff
-
+  
   #Plotting the remapping for visual control
   #Red O: alignment position
   #Black X: remapping position
@@ -160,12 +160,12 @@ st.get.cy3 <- function(slice.parameters, Cy3.gray, HE.path,display.segmentation 
     dist.align.to.spot <- sqrt(rowSums((cbind(spots$soma$x.remap,spots$soma$y.remap) - alignment.pos)^2))
     
     distance.matrix[i,] <- dist.align.to.spot
-     
+    
   }
   
   max.acceptable.dist <- 100
-
-
+  
+  
   #Getting the closest segmented spots for each aligned spots
   min.val <- apply(distance.matrix,1,min)
   min.id <- apply(distance.matrix,1,which.min)
@@ -210,7 +210,7 @@ st.get.cy3 <- function(slice.parameters, Cy3.gray, HE.path,display.segmentation 
   if (length(spots.valid) != length(unique(spots.valid))){
     stop('The same segmented spot is associated to multiple aligned spot. Something should be done')
   }
-
+  
   if (qc.plot){
     
     #Plotting re-aligned points with color to check pairs are correct
@@ -231,7 +231,7 @@ st.get.cy3 <- function(slice.parameters, Cy3.gray, HE.path,display.segmentation 
     rasterImage(as.raster(HE$original), xleft = 1, xright = HE$resolution$x, ybottom =  HE$resolution$y, ytop = 1,angle=0)
     symbols(alignment$x,alignment$y,circles = alignment$radius, inches=FALSE, asp = 1,fg='red',ylim = c(HE$resolution$y,0),add = TRUE, lwd = 0.2)
     dev.off()
-
+    
     #Plotting circles with spots ids
     pdf('Registration/QC/spots-id.pdf')
     plot(alignment$id.x,alignment$id.y,asp=1,ylim=c(36,0),xlab='x spot id',ylab='y spot id',col='lightgray')
@@ -250,8 +250,8 @@ st.get.nuclei <- function(slice.parameters, HE.gray, display.segmentation = TRUE
   #Default filter for segmenting cells
   if (length(slice.parameters$cell.body.filter) == 0){
     slice.parameters$cell.body.filter <-structure(list(alim = c(3, 50), threshold.range = c(60,275L),
-                                                  eccentricity = 500L, Max = 200, Min = 10, brain.threshold = 50L, 
-                                                  resize = 0.05, blur = 4L, downsample = 0.25),
+                                                       eccentricity = 500L, Max = 200, Min = 10, brain.threshold = 50L, 
+                                                       resize = 0.05, blur = 4L, downsample = 0.25),
                                                   .Names = c("alim","threshold.range", "eccentricity",
                                                              "Max", "Min", "brain.threshold","resize", "blur", "downsample"))
   }
@@ -276,7 +276,7 @@ st.add.nuclei.per.spot <- function(alignment, nuclei, qc.plot = FALSE){
   
   #Going trough all spots
   for (i in 1:(dim(alignment)[1])){
-
+    
     #Creating column matrix where each row is the x-y coordinates of the current spot
     spot.pos <- t(replicate(length(nuclei$soma$x),c(alignment$x[i],alignment$y[i])))
     
@@ -285,7 +285,7 @@ st.add.nuclei.per.spot <- function(alignment, nuclei, qc.plot = FALSE){
     
     #Computing euclidian distance of all nuclei to the current spot
     distance.to.spot <- sqrt(rowSums((cbind(nuclei$soma$x,nuclei$soma$y) - spot.pos)^2))
-
+    
     #Getting id of nuclei in spots
     nuclei.in.spot <- which(distance.to.spot <= r)
     
@@ -337,7 +337,7 @@ st.registration.preprocessing <- function(slice.parameters, HE.path){
 
 #Registering the spots into the atlasS
 st.register.spots <- function(alignment, slice.parameters, qc.plot = FALSE){
-
+  
   #Returns the spots in an appropriate format for using wholeBrain
   #Also, operates rotation to re-orient in the same way as the Cy3 picture
   get.spots.for.inspection <- function(alignment){
@@ -392,16 +392,16 @@ st.register.spots <- function(alignment, slice.parameters, qc.plot = FALSE){
     cursor <- 1
     
     for (i in 1:length(slice.parameters$subset)){
-
+      
       if (i == 1){
         #Loading the previsouly defined registration
         load('Registration/regi.Rdata')
       }else{
         load(sprintf('Registration/regi%d.RData',i))
       }
-    
+      
       cur.alignment <- alignment[slice.parameters$subset[[i]],]
-            
+      
       #Defining spots from alignment with an appropriate format for using wholebrain
       #Also rotating when registration do not correspond to the alignment
       spots <- get.spots.for.inspection(cur.alignment)
@@ -439,13 +439,13 @@ st.register.spots <- function(alignment, slice.parameters, qc.plot = FALSE){
   } 
   
   dataset$animal <- slice.parameters$slice
-
+  
   return(dataset)
 }
 
 #Save the variables, and check if new file is identical to previous one and if previous file is lacking)
 st.save.variables <- function(alignment.new, slice.parameters.new, dataset.new, df.equality.variables = data.frame(slice = '',stringsAsFactors = FALSE), idx = 1, save.intermediate.r.variables){
- 
+  
   al.path <- 'Registration/alignment.RData'
   sp.path <- 'Registration/sliceparameters.RData'
   da.path <- 'Registration/dataset.RData'
@@ -465,14 +465,14 @@ st.save.variables <- function(alignment.new, slice.parameters.new, dataset.new, 
     if (!identical.bool & save.intermediate.r.variables){
       save(alignment, file = 'Registration/alignment-old.RData')  
     }
-
-  #Case without file
+    
+    #Case without file
   }else{
     df.equality.variables$alignment.exist[idx] <- FALSE
   }
   
   alignment <- alignment.new
-
+  
   #Already a dataset file
   if (file.exists(da.path)){
     
@@ -489,7 +489,7 @@ st.save.variables <- function(alignment.new, slice.parameters.new, dataset.new, 
       save(dataset, file = 'Registration/dataset-old.RData')  
     }
     
-  #Case without file
+    #Case without file
   }else{
     df.equality.variables$dataset.exist[idx] <- FALSE
   }  
@@ -519,10 +519,10 @@ st.save.variables <- function(alignment.new, slice.parameters.new, dataset.new, 
   }
   
   slice.parameters <- slice.parameters.new
-   
-
+  
+  
   df.equality.variables$slice[idx] <- slice.parameters$slice
- 
+  
   
   if (save.intermediate.r.variables){
     save(alignment, file = al.path) 
@@ -531,7 +531,7 @@ st.save.variables <- function(alignment.new, slice.parameters.new, dataset.new, 
   }
   
   
-   
+  
   return(df.equality.variables)
   
 }
@@ -577,7 +577,7 @@ st.create.spots.matrix <- function(path.to.slice, dataset, path.to.index){
   rows.split <- strsplit(rnames,'x')
   rows.mat <- matrix(as.numeric(unlist(rows.split)),ncol = 2,byrow = TRUE)
   spots.st.coordinates <- data.frame(x = rows.mat[,1],y=rows.mat[,2])
-
+  
   #Rows to keep in spots.append
   keep.row = logical(dim(spots.table)[1])
   
@@ -612,12 +612,13 @@ st.create.spots.matrix <- function(path.to.slice, dataset, path.to.index){
       st.data.idx.order[[curs]] <- corresponding.spot
     }
   }
-    
+  
   #Selecting only appropriate rows
   spots.table <- spots.table[keep.row,]
   st.data <- st.data.file[st.data.idx.order,]
   
   spots.id <- sprintf('%s_%s',table.index$id[table.index$slice.name == dataset$animal[1]],row.names(st.data))
+  
   spots.table$spots.id <- spots.id 
   row.names(st.data) <- spots.id
   
@@ -638,7 +639,7 @@ st.create.spots.matrix <- function(path.to.slice, dataset, path.to.index){
 st.entirely.process.one.slice <- function(slice.dir, display.segmentation = FALSE, qc.plot = TRUE, df.equality.variables = data.frame(slice = '',stringsAsFactors = FALSE), idx = 1, save.intermediate.r.variables = FALSE, path.to.index){
   
   graphics.off()
-
+  
   #Going into slice directory
   setwd(slice.dir)
   
@@ -681,7 +682,7 @@ st.entirely.process.one.slice <- function(slice.dir, display.segmentation = FALS
   
   #Creating the spots matrix
   st.create.spots.matrix(slice.dir, dataset, path.to.index)
-
+  
   setwd('..')
   
   #Return a variable to check if the re-computed files are identical to the saved ones
@@ -691,7 +692,7 @@ st.entirely.process.one.slice <- function(slice.dir, display.segmentation = FALS
 #Might be windows only and RStudio only, returns the default path to all slices
 st.get.default.path.slices <- function(){
   
-  return(list.files(full.names = T))
+  return(list.files(full.names = T, pattern = '^(ID).*'))
 }
 
 # ---------------------- Defining parameters ---------------------- 
@@ -700,7 +701,7 @@ st.get.default.path.slices <- function(){
 library(wholebrain)
 
 #Chose the directory with the data for registration
-setwd('E:/test-registration/data')
+setwd('data')
 
 #Display intermediate windows
 display.segmentation <- FALSE
@@ -731,3 +732,94 @@ df.equality.variables <- data.frame(slice = '',
 for (idx in 1:length(path.to.slices)){
   df.equality.variables <- st.entirely.process.one.slice(path.to.slices[idx], display.segmentation, qc.plot, df.equality.variables, idx, save.intermediate.r.variables, path.to.index)
 }
+
+
+#------------- Merging matrices together ------------- 
+
+save.as.RData = TRUE
+save.as.tsv = TRUE
+
+n.slices <- length(path.to.slices)
+
+#Initializing lists that will contain the spots tabe and expression matrices of all slices
+list.spots.tables <- NULL
+list.expr.mat <- NULL
+
+#Loading all matrices
+for (i in 1:n.slices){
+  
+  list.spots.tables[[i]] <- read.table(paste(path.to.slices[i],'/Matrices/spotstable.tsv',sep='/'),
+                                       sep='\t', header = TRUE, row.names = 1, quote="", stringsAsFactors = FALSE)
+  
+  list.expr.mat[[i]] <- read.table(paste(path.to.slices[i],'/Matrices/exprmat.tsv',sep='/'),
+                                   sep='\t', header = TRUE, row.names = 1, quote="", stringsAsFactors = FALSE)
+  
+}
+
+#Counting number of spots and genes
+n.spots <- 0
+n.genes <- 0
+
+for (i in 1:n.slices){
+  n.spots <- n.spots + dim(list.expr.mat[[i]])[1]
+  n.genes <- n.genes + dim(list.expr.mat[[i]])[2]
+}
+
+#Creating vector with all genes (including duplicates) with preallocation
+list.genes <- character(n.genes)
+
+curs <- 1
+for (i in 1:n.slices){
+  list.genes[curs:(curs+dim(list.expr.mat[[i]])[2] -1)] <- colnames(list.expr.mat[[i]])
+  curs <- curs + dim(list.expr.mat[[i]])[2]
+}
+
+#Keeping only unique genes, will be used as column names
+list.genes <- unique(list.genes)
+n.genes <- length(list.genes)
+
+#Pre-allocating the spot table
+spots.table <- data.frame(slice_index = character(n.spots),
+                          ML = double(n.spots),
+                          DV = double(n.spots),
+                          AP = double(n.spots),
+                          acronym = character(n.spots),
+                          name = character(n.spots),
+                          nuclei = integer(n.spots),
+                          radius = double(n.spots),
+                          x = integer(n.spots),
+                          y = integer(n.spots),
+                          stringsAsFactors = FALSE)
+
+#Pre-allocating the expression matrix (st.data)
+st.data <- data.frame(matrix(0.0, ncol = n.genes, nrow = n.spots))
+
+#Naming columns by genes
+colnames(st.data) <- list.genes
+
+#Filling the st.data and spots.table objects
+curs <- 1
+for (i in 1:n.slices){
+  cur.range <- curs:(curs+dim(list.spots.tables[[i]])[1] -1)
+  spots.table[cur.range,] <- list.spots.tables[[i]]
+  st.data[cur.range,colnames(list.expr.mat[[i]])] <- list.expr.mat[[i]]
+  rownames(spots.table)[cur.range] <- rownames(list.spots.tables[[i]])
+  curs <- curs + dim(list.spots.tables[[i]])[1]
+}
+
+#Using spots as row names for st.data
+rownames(st.data) <- rownames(spots.table)
+
+
+if (save.as.RData){
+  save(st.data, file = 'exprmat.RData')
+  save(spots.table, file='metatable.RData')
+}
+
+if (save.as.tsv){
+  write.table(spots.table, file='metatable.tsv', sep='\t', quote=FALSE, col.names = NA)
+  write.table(st.data, file='exprmat.tsv', sep='\t', quote=FALSE, col.names = NA)
+}
+
+
+
