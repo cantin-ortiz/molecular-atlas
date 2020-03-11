@@ -1,0 +1,2 @@
+cd figures\mov4\movie
+ffmpeg -r 60 -f image2 -s 1920x1080 -i movie%03d.png -vcodec libx264 -crf 30 -pix_fmt yuv420p isocortex-clusters.mp4

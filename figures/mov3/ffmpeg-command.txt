@@ -1,2 +1,2 @@
-cd figures\mov2\movie
-ffmpeg -r 60 -f image2 -s 1920x1080 -i movie%03d.png -vcodec libx264 -crf 30 -pix_fmt yuv420p svm-smoothing.mp4
+cd figures\mov3\movie
+ffmpeg -r 60 -f image2 -s 1920x1080 -i movie%03d.png -vcodec libx264 -crf 30 -pix_fmt yuv420p atlas-2D-smoothed.mp4
