@@ -309,7 +309,7 @@ plot.saggital.view <- function(xl, yt, yb, lines.AP = NULL){
   }
   
   #Loading the saggital view data
-  load(paste(path.bin, 'saggitalView.RData', sep='/'))
+  load(paste(path.matrices, 'saggitalView.RData', sep='/'))
   
   df.poly <- saggital.view$df.poly
   df.segments <- saggital.view$df.segments
@@ -376,7 +376,7 @@ get.acronym.depth <- function(acronyms.vect){
   }
   
   #Loading json data
-  json_data <- fromJSON(file= paste(path.bin,'ontology.json',sep='/'))
+  json_data <- fromJSON(file= paste(path.matrices,'ontology.json',sep='/'))
   json <- json_data$msg[[1]]
   
   #Calling local function and returning maximal depth found
