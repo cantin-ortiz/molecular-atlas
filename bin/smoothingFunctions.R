@@ -447,7 +447,7 @@ plot.smooth.atlas.tsne.colors <- function(file.path = 'atlas.pdf',
                                           grid.3d, 
                                           spots.table, 
                                           path.to.cluster,
-                                          path.to.tsne = 'C:/Users/MatLab/Desktop/transcripBrainAtlas/exp/181114-tsneFromJose/tsne_50_3joint_000.txt',
+                                          path.to.tsne = tsne.3d.path,
                                           colors.order = c(3,2,1),
                                           min.cluster.size = 10){
   

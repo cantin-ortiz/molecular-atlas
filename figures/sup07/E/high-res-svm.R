@@ -10,7 +10,6 @@ library(raster)
 #------------- PARAMETERS -----------------
 
 vector.order <- c(1,2,3)
-# data.dir <- 'C:/Users/MatLab/Desktop/transcripBrainAtlas/figures/Vector atlas SVM/pixels/all-genes-fullHD/'
 data.dir <- paste(path.matrices, 'smoothed-atlas/all-genes-HD/pixels', sep = '/')
 selected <- '10_0.3_correlation'
 

@@ -13,7 +13,6 @@ n.points <- 100000
 x.range <- c(0, 6)
 y.range <- c(-7,0)
 
-dir.data <- 'C:/Users/MatLab/Desktop/transcripBrainAtlas/figures/main-figures/figure4'
 fname.pred <- paste(path.matrices, 'predicted_classes_nn.tsv', sep = '/')
 fname.cells <- paste(path.matrices, 'cells-to-classify.tsv', sep = '/')
 

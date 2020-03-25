@@ -258,27 +258,3 @@ mesh3d.new.window <- function(show.outline = TRUE){
   if(show.outline)
     mesh3d.show.outline()
 }
-
-
-
-
-# #Brain outline
-# get.brain.outline <- function(){
-# 
-#   indices.path <- 'C:/Users/MatLab/Desktop/transcripBrainAtlas/exp/190211-postTreatment3D/indices.csv'
-#   vertices.path <- 'C:/Users/MatLab/Desktop/transcripBrainAtlas/exp/190211-postTreatment3D/vertices.csv'
-#   
-#   indices <- as.matrix(t(read.table(indices.path, sep = ',')))
-#   indices <- indices[c(2,3,1),]
-#   
-#   vertices <- read.table(vertices.path, sep = ',')/100
-#   vertices <- vertices[,c(2,3,1)]
-#   vertices <- rbind(t(as.matrix(vertices)),1)
-#   vertices[3,] <- - vertices[3,]
-#   vertices[2,] <- vertices[2,] - 0.5
-#   vertices[1,] <- vertices[1,] 
-#   
-#   tmesh.outline <- tmesh3d(vertices, indices)
-#   
-#   return(tmesh.outline)
-# }
