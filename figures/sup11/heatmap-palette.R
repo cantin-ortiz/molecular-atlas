@@ -509,8 +509,7 @@ raw.cluster.266 <- read.table(path.cl.266, row.names = 1)
 spots.table <- append.cluster.to.spots.table(add.parent.acronym(load.spots.table()), cl.file, min.cluster.size = 10)
 spots.table.266 <- append.cluster.to.spots.table(add.parent.acronym(load.spots.table()), path.cl.266, min.cluster.size = 10)
 
-load(seurat.object.path)
-mat.ic.all <- get.ic.mat(seur.obj, 'fiftypercents')
+mat.ic.all <- as.matrix(read.table(paste(path.matrices, 'ic-matrix-scores.tsv', sep = '/'), sep = '\t', row.names = 1, header = T))
 mat.ic.all.2 <- mat.ic.all[,ic.kept]
 mat.ic.cl.avg.all <- get.ic.cluster.average(spots.table, mat.ic.all.2)
 mat.ic.cl.dist <- get.ic.cluster.dist(mat.ic.cl.avg.all)

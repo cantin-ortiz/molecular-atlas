@@ -30,8 +30,7 @@ df.plots <- df.plots[1:4,]
 
 spots.table <- load.spots.table()
 all.AP <- sort(unique(spots.table$AP))
-load(seurat.object.path)
-ic.mat <- get.ic.mat(seur.obj, 'fiftypercents')
+ic.mat <- as.matrix(read.table(paste(path.matrices, 'ic-matrix-scores.tsv', sep = '/'), sep = '\t', row.names = 1, header = T))
 
 #------------------- Plot ------------------- 
 

@@ -503,9 +503,7 @@ spots.table <- append.cluster.to.spots.table(spots.table, cl.file, min.cluster.s
 
 spots.table[spots.table$acronym.parent == 'root', 'acronym.parent'] <- 'grey'
 
-
-load(seurat.object.path)
-mat.ic.all <- get.ic.mat(seur.obj, 'fiftypercents')
+mat.ic.all <- as.matrix(read.table(paste(path.matrices, 'ic-matrix-scores.tsv', sep = '/'), sep = '\t', row.names = 1, header = T))
 mat.ic.all.2 <- mat.ic.all[,ic.kept]
 mat.ic.cl.avg.all <- get.ic.cluster.average(spots.table, mat.ic.all.2)
 mat.ic.cl.dist <- get.ic.cluster.dist(mat.ic.cl.avg.all)

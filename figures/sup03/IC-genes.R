@@ -9,11 +9,10 @@ cutoff <- 20
 
 #------------------- Loadings  ------------------- 
 
-load(seurat.object.path)
-ic.mat <- seur.obj@dr$fiftypercents@gene.loadings
+ic.mat <- as.matrix(read.table(paste(path.matrices, 'ic-matrix-loads.tsv', sep = '/'), sep = '\t', row.names = 1, header = T ))
 t <- ic.mat[,ic.kept]
 
-#-------------------  ------------------- 
+#------------------- Plotting ------------------- 
 
 pdf(generate.appropriate.file.name('ic-loads.pdf'), paper = 'a4', width = 9, height = 12, useDingbats = F)
 par(mfcol= c(8,6),

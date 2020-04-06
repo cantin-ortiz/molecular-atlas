@@ -7,13 +7,7 @@ setwd('figures/sup04')
 
 spots.table <- add.parent.acronym(load.spots.table())
 
-load(seurat.object.path)
-ic.mat <- get.ic.mat(seur.obj, 'fiftypercents')
-seur.obj.2 <- seur.obj
-seur.obj.2@dr$ica <- NULL
-seur.obj.2@dr$fiftypercents <- NULL
-seur.obj.2@dr$twentypercents <- NULL
-seur.obj.2@dr$ica <- seur.obj@dr$fiftypercents
+ic.mat <- as.matrix(read.table(paste(path.matrices, 'ic-matrix-scores.tsv', sep = '/'), sep = '\t', row.names = 1, header = T))
 
 spots.table <- spots.table[intersect(rownames(spots.table), rownames(ic.mat)),]
 
