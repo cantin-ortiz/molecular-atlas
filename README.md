@@ -1,6 +1,9 @@
 # A Molecular Atlas of the Adult Mouse Brain
 ## Disclaimer
-This code is shared for reproducibility purposes. Despite our efforts, there might still be some hardcoded paths and poorly commented parts left. We cannot guarantee this will run fine in your system. The sessionInfo() output is available in the bin directory and will provide guidance about the conditions in which scripts were originally run.
+This code is shared for reproducibility purposes. Despite our efforts, there might still be some hardcoded paths and poorly commented parts. You might need to modify parts of the code to make it work on your system. The sessionInfo() output is available in the bin directory and will provide guidance about the conditions in which scripts were originally run.
+
+## License
+This code is shared under the MIT License Agreement. See the LICENSE file for more details.
 
 ## 01-Registration
 Data is available at [...]. Simply cd to the data directory and run the script. It will generate a meta table and a raw count expression table (this will take several hours).
