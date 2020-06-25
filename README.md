@@ -25,10 +25,8 @@ These scripts perform the normalization and batch correction of the expression m
 ### 03-clustering
 This script performs the clustering based on the normalized expression matrix generated previously ([download](https://www.molecularatlas.org/data-to-download/processed_data/expr_normalized_table.tsv.gz)).
 
-### 04-SC_mapping
-
-
-### 05-DEA
+### 04-DEA
+These scripts can be run to perform of a Differential Expression Analysis (DEA).
 
 ### Figures
 Figures were generated using many intermediary data files ([download](https://www.molecularatlas.org/data-to-download/intermediary_data/figures.zip)). In order to render the figures, make sure to source the script 'includes.R' from the bin directory. It will load many functions required for plotting. You must update the two variables defined in the two first lines of includes.R : path.bin should be a string with the absolute path to the bin directory, path.matrices a string with the absolute path to the previously downloaded folder containing all the figures data.
