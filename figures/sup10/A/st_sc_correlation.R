@@ -1,3 +1,5 @@
+# NOTE: Unlike other figure scripts, this one was not updated to run instantly.
+
 #!/usr/bin/env Rscript
 # Script created by Jose Fernandez Navarro <jc.fernandez.navarro@gmail.com>
 # Run it like this:
