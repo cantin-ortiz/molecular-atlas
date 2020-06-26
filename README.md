@@ -8,13 +8,13 @@ This code is shared for reproducibility purposes. Despite our efforts, some hard
 This code is shared under the MIT License Agreement. See the LICENSE file for more details.
 
 ## Authors
-Cantin Ortiz <cantin.ortiz@gmail.com>
+Cantin Ortiz <cantin.ortiz@gmail.com>  
 Jose Fernandez Navarro <jc.fernandez.navarro@gmail.com>
 
 ## Content
-Directories 01-registration, 02-qc_normalization, 03-clustering, 04-SC_mapping and 05-DEA correspond to the analysis pipeline and are supposed to be executed sequentially. 
-Directories bin and figures contain the code used to render the figures from intermediary data files.
-All data files are available at [www.molecularatlas.org](https://www.molecularatlas.org/download-data).
+Directories 01-registration, 02-qc_normalization, 03-clustering and 04-DEA correspond to the analysis pipeline and are supposed to be executed sequentially.  
+Directories bin and figures contain the code used to render the figures from intermediary data files.  
+All data files are available at [www.molecularatlas.org](https://www.molecularatlas.org/download-data).  
 
 ### 01-Registration
 This script will generate a meta table and a raw count expression table (this will take several hours). Simply cd to the data directory ([download](https://www.molecularatlas.org/data-to-download/intermediary_data/01-registration.zip)) and run the script.
