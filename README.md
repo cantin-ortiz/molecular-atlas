@@ -1,5 +1,6 @@
 # A Molecular Atlas of the Adult Mouse Brain
-This repository contains the code from the *Science Advances* paper [A Molecular Atlas of the Adult Mouse Brain](https://advances.sciencemag.org/content/6/26/eabb3446).
+This repository contains the code from the *Science Advances* paper [A Molecular Atlas of the Adult Mouse Brain](https://advances.sciencemag.org/content/6/26/eabb3446).  
+Further information is available at molecularatlas.org, including data to download.
 
 ## Disclaimer
 This code is shared for reproducibility purposes. Despite our efforts, some hardcoded paths and poorly commented parts could be remaining. You might need to modify the code to make it work on your system. The sessionInfo() output is available in the bin directory and will provide guidance about the conditions in which scripts were originally run.
