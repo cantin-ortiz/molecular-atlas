@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 # Script created by Jose Fernandez Navarro <jc.fernandez.navarro@gmail.com>
 # Run it like this:
-# ./st_sc_correlation.R st_counts.tsv sc_counts.tsv st_clusters.tsv sc_clusters.tsv
+# ./enrichment.R gene_list.txt
 #
 library(enrichR)
 library(stringr)
