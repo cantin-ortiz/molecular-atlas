@@ -29,6 +29,13 @@ This script performs the clustering based on the normalized expression matrix ge
 ### 04-DEA
 These scripts can be run to perform a Differential Expression Analysis (DEA).
 
+### 05-SC
+These scripts can be run to normalize the SC dataset and perform a correlation analysis with the ST dataset. 
+
+### 06-enrichment
+This script can be run to perform an enrichment analysis on the gene palette (or any set of genes) and generate
+some useful plots. 
+
 ### Figures
 Figures were generated using many intermediary data files ([download](https://www.molecularatlas.org/data-to-download/intermediary_data/figures.zip)). In order to render the figures, you must also download the bin directory and upload the two first lines of the script ‘includes.R’: 
 - path.bin (string): the absolute path to the bin directory
