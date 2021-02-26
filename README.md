@@ -37,7 +37,7 @@ This script can be run to perform an enrichment analysis on the gene palette (or
 some useful plots. 
 
 ### Figures
-Figures were generated using many intermediary data files ([download](https://www.molecularatlas.org/data-to-download/intermediary_data/figures.zip)). In order to render the figures, you must also download the bin directory and upload the two first lines of the script ‘includes.R’: 
+Figures were generated using many intermediary data files ([download](https://www.molecularatlas.org/data-to-download/intermediary_data/figures.zip)). In order to render the figures, you must also download the bin directory and update the two first lines of the script ‘includes.R’: 
 - path.bin (string): the absolute path to the bin directory
 - path.matrices (string): the absolute path to the figures data folder (unzipped)  
 
